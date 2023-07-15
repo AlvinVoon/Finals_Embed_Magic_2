@@ -3,9 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css"> 
     <title>Document</title>
 </head>
 <body>
-    <h1>Hello World!</h1>
+    <section class="banner-sec">
+        <div class="banner-wrap">
+          <div class="banner-container">
+            <div class="banner-title">
+              <h1>Road Traffic Information Centre</h1>
+              <p>Find all related information here</p>
+            </div>
+            <div class="bar"> 
+              <input id="search-input" class="searchbar" type="text" title="Search" placeholder="Search...">
+              <button id="search-button">Search</button>
+              <i class="fa fa-search search-icon"></i>
+            </div>
+          </div>
+        </div>
+      </section>
+      <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-database.js"></script>
+      <script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBHl0aJh8_UdVNprRa4NDc3meJx0s0MRA8",
+  authDomain: "bugcrusher-2023.firebaseapp.com",
+  databaseURL: "https://bugcrusher-2023-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "bugcrusher-2023",
+  storageBucket: "bugcrusher-2023.appspot.com",
+  messagingSenderId: "639302583219",
+  appId: "1:639302583219:web:760026ced1f9b9570541c6"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+// Function to send the search query to Firebase Realtime Database
+function sendSearchQuery(query) {
+    // Create a reference to your Firebase Realtime Database
+    var database = firebase.database().ref("searchQueries");
+
+    // Push the search query to Firebase
+    database.push().set({
+        query: query
+    });
+}
+
+// Attach event listener to the search button
+document.getElementById("search-button").addEventListener("click", function() {
+    var query = document.getElementById("search-input").value.trim();
+    sendSearchQuery(query);
+    document.getElementById("search-input").value = "";
+});
+    </script>
 </body>
+
 </html>
